@@ -27,6 +27,9 @@ APipeActor::APipeActor()
 		SpriteUp->SetSprite(UpSpriteObj.Object);
 		SpriteDown->SetupAttachment(c);
 		SpriteDown->SetSprite(DownSpriteObj.Object);
+
+		SpriteUp->SetRelativeLocation(FVector(0, 0, 200));
+		SpriteDown->SetRelativeLocation(FVector(0, 0, -200));
 	}
 
 }
@@ -35,6 +38,7 @@ APipeActor::APipeActor()
 void APipeActor::BeginPlay()
 {
 	Super::BeginPlay();
+	ResetPipePosition();
 	
 }
 
@@ -42,6 +46,15 @@ void APipeActor::BeginPlay()
 void APipeActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void APipeActor::ResetPipePosition()
+{
+	for (size_t i = 0; i < 3; i++)
+	{
+		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * 80, 0, 0));
+	}
 
 }
 

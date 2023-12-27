@@ -23,6 +23,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void ResetPipePosition();
 protected:
 	UPROPERTY()
 	TArray<USceneComponent*> PipeGroup;
