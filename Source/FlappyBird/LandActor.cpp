@@ -43,7 +43,7 @@ ALandActor::ALandActor()
 void ALandActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	LandMeshRender->SetScalarParameterValueOnMaterials(TEXT("Speed"), 0.05);
 }
 
 void ALandActor::UpdateMove(float DeltaTime) {
