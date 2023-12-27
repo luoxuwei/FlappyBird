@@ -34,6 +34,9 @@ ALandActor::ALandActor()
 	ConstructorHelpers::FObjectFinder<UMaterial> PlanMatObj(TEXT("Material'/Game/FlappyBird/Materials/M_LandSprite.M_LandSprite'"));
 	LandMeshRender->SetMaterial(0, PlanMatObj.Object);
 
+	LandMeshRender->SetRelativeRotation(FRotator(0, 0, 90));
+	LandMeshRender->SetRelativeScale3D(FVector(3, 1, 1));
+
 }
 
 // Called when the game starts or when spawned
