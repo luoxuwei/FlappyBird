@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "LandActor.generated.h"
 class UPaperSpriteComponent;
+class UStaticMeshComponent;
 
 UCLASS()
 class FLAPPYBIRD_API ALandActor : public AActor
@@ -30,4 +31,6 @@ private:
 	UPROPERTY()
 	UPaperSpriteComponent* LandRenderComp1;
 	int32 MoveSpeed;
+	UPROPERTY()
+	UStaticMeshComponent* LandMeshRender;
 };
