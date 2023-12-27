@@ -29,4 +29,5 @@ private:
 	UPaperSpriteComponent* LandRenderComp0;
 	UPROPERTY()
 	UPaperSpriteComponent* LandRenderComp1;
+	int32 MoveSpeed;
 };

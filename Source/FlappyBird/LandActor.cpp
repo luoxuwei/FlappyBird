@@ -21,6 +21,8 @@ ALandActor::ALandActor()
 	LandRenderComp0->SetSprite(BirdbookObj.Object);
 	LandRenderComp1->SetSprite(BirdbookObj.Object);
 	LandRenderComp1->SetRelativeLocation(FVector(336, 0, 0));
+
+	MoveSpeed = 200;
 }
 
 // Called when the game starts or when spawned
@@ -32,12 +34,19 @@ void ALandActor::BeginPlay()
 
 void ALandActor::UpdateMove(float DeltaTime) {
 
+	if (!LandRenderComp0 || !LandRenderComp1) {
+		return;
+	}
+
+	LandRenderComp0->AddRelativeLocation(FVector::ForwardVector * -1 * MoveSpeed * DeltaTime);
+	LandRenderComp1->AddRelativeLocation(FVector::ForwardVector * -1 * MoveSpeed * DeltaTime);
 }
 
 // Called every frame
 void ALandActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UpdateMove(DeltaTime);
 
 }
 
