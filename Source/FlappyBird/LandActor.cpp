@@ -40,7 +40,16 @@ void ALandActor::UpdateMove(float DeltaTime) {
 
 	LandRenderComp0->AddRelativeLocation(FVector::ForwardVector * -1 * MoveSpeed * DeltaTime);
 	LandRenderComp1->AddRelativeLocation(FVector::ForwardVector * -1 * MoveSpeed * DeltaTime);
+
+	if (LandRenderComp0->GetRelativeTransform().GetLocation().X < -336) {
+		LandRenderComp0->SetRelativeLocation(LandRenderComp1->GetRelativeTransform().GetLocation() + FVector::ForwardVector * 336);
+	}
+	if (LandRenderComp1->GetRelativeTransform().GetLocation().X < -336) {
+		LandRenderComp1->SetRelativeLocation(LandRenderComp0->GetRelativeTransform().GetLocation() + FVector::ForwardVector * 336);
+	}
+
 }
+
 
 // Called every frame
 void ALandActor::Tick(float DeltaTime)
