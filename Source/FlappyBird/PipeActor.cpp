@@ -42,6 +42,11 @@ void APipeActor::BeginPlay()
 	
 }
 
+float APipeActor::RandPipeGroupOffsetZ()
+{
+	return FMath::RandRange(-80, 150);
+}
+
 // Called every frame
 void APipeActor::Tick(float DeltaTime)
 {
@@ -53,7 +58,7 @@ void APipeActor::ResetPipePosition()
 {
 	for (size_t i = 0; i < 3; i++)
 	{
-		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * 80, 0, 0));
+		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * 80, 0, RandPipeGroupOffsetZ()));
 	}
 
 }
