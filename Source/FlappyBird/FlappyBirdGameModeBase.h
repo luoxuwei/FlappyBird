@@ -8,6 +8,7 @@
 
 class ABgActor;
 class ALandActor;
+class APipeActor;
 /**
  * 
  */
@@ -27,4 +28,6 @@ private:
 	ABgActor* BgActor;
 	UPROPERTY()
 	ALandActor* LandActor;
+	UPROPERTY()
+	APipeActor* PipeActor;
 };
