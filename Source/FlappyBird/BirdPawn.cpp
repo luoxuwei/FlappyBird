@@ -26,7 +26,7 @@ ABirdPawn::ABirdPawn()
 	ConstructorHelpers::FObjectFinder<UPaperFlipbook> BirdbookObj(TEXT("PaperFlipbook'/Game/FlappyBird/Anima/Birds/PF_RedBird.PF_RedBird'"));
 	BirdRenderComponent->SetFlipbook(BirdbookObj.Object);
 	BirdRenderComponent->SetCollisionProfileName(TEXT("OverlapAll"));
-
+	BirdRenderComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	BirdRenderComponent->OnComponentBeginOverlap.AddDynamic(this, &ABirdPawn::OnComponentBeginOverlap);
 
 }
