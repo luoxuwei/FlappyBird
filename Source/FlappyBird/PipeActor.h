@@ -20,6 +20,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	float RandPipeGroupOffsetZ();
+	void UpdateMove(float DeltaTime);
 
 public:	
 	// Called every frame
@@ -29,4 +30,6 @@ protected:
 	UPROPERTY()
 	TArray<USceneComponent*> PipeGroup;
 
+	int32 MoveSpeed;
+	float PipeInterval;
 };

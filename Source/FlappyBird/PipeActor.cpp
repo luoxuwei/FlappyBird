@@ -32,6 +32,9 @@ APipeActor::APipeActor()
 		SpriteDown->SetRelativeLocation(FVector(0, 0, -200));
 	}
 
+	MoveSpeed = 100;
+	PipeInterval = 160;
+
 }
 
 // Called when the game starts or when spawned
@@ -47,10 +50,25 @@ float APipeActor::RandPipeGroupOffsetZ()
 	return FMath::RandRange(-80, 150);
 }
 
+void APipeActor::UpdateMove(float DeltaTime)
+{
+	for (int32 i = 0; i < 3; i++)
+	{
+		PipeGroup[i]->AddRelativeLocation(FVector::ForwardVector * -1 * MoveSpeed * DeltaTime);
+		if (PipeGroup[i]->GetRelativeTransform().GetLocation().X < -200) {
+			int32 FollowSize = (i == 0) ? 2 : i - 1;
+
+			float x = (PipeGroup[FollowSize]->GetRelativeTransform().GetLocation() + FVector::ForwardVector * PipeInterval).X;
+			PipeGroup[i]->SetRelativeLocation(FVector(x, 0, RandPipeGroupOffsetZ()));
+		}
+	}
+}
+
 // Called every frame
 void APipeActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UpdateMove(DeltaTime);
 
 }
 
@@ -58,7 +76,7 @@ void APipeActor::ResetPipePosition()
 {
 	for (size_t i = 0; i < 3; i++)
 	{
-		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * 80, 0, RandPipeGroupOffsetZ()));
+		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * PipeInterval, 0, RandPipeGroupOffsetZ()));
 	}
 
 }

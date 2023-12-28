@@ -17,7 +17,7 @@ void AFlappyBirdGameModeBase::BeginPlay() {
 	BgActor = GetWorld()->SpawnActor<ABgActor>();
 	BgActor->SetActorLocation(FVector(0, -100, 0));
 	LandActor = GetWorld()->SpawnActor<ALandActor>();
-	LandActor->SetActorLocation(FVector(0, 0, -200));
+	LandActor->SetActorLocation(FVector(0, 2, -200));
 	PipeActor = GetWorld()->SpawnActor<APipeActor>();
 	PipeActor->SetActorLocation(FVector(0, 0, 0));
 }
