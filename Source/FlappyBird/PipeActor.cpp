@@ -24,9 +24,9 @@ APipeActor::APipeActor()
 		UPaperSpriteComponent* SpriteUp = CreateDefaultSubobject<UPaperSpriteComponent>(*FString::Printf(TEXT("Group%dPipeUp"), i));
 		UPaperSpriteComponent* SpriteDown = CreateDefaultSubobject<UPaperSpriteComponent>(*FString::Printf(TEXT("Group%dPipeDown"), i));
 		SpriteUp->SetupAttachment(c);
-		SpriteUp->SetSprite(UpSpriteObj.Object);
+		SpriteUp->SetSprite(DownSpriteObj.Object);
 		SpriteDown->SetupAttachment(c);
-		SpriteDown->SetSprite(DownSpriteObj.Object);
+		SpriteDown->SetSprite(UpSpriteObj.Object);
 
 		SpriteUp->SetRelativeLocation(FVector(0, 0, 200));
 		SpriteDown->SetRelativeLocation(FVector(0, 0, -200));
