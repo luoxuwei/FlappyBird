@@ -32,7 +32,14 @@ ABirdPawn::ABirdPawn()
 void ABirdPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	auto body = BirdRenderComponent->GetBodyInstance();
+	if (body) {
+		body->bLockXTranslation = true;
+		body->bLockYTranslation = true;
+		body->bLockXRotation = true;
+		body->bLockZRotation = true;
+		body->CreateDOFLock();
+	}
 }
 
 // Called every frame
