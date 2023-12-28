@@ -23,6 +23,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+public:
+	UFUNCTION(Exec)
+	void ChangeGameState(int32 State);
+	void BeginGame();
+
 private:
 	UPROPERTY()
 	ABgActor* BgActor;

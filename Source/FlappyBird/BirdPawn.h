@@ -8,6 +8,15 @@
 class UPaperFlipbookComponent;
 class UCameraComponent;
 
+UENUM(BlueprintType)
+enum class EBirdState : uint8
+{
+	EBS_Idle,
+	EBS_Fly,
+	EBS_Drop,
+	EBS_Dead,
+};
+
 UCLASS()
 class FLAPPYBIRD_API ABirdPawn : public APawn
 {
@@ -31,11 +40,14 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void ChangeState(EBirdState State);
 
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UPaperFlipbookComponent* BirdRenderComponent;
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamera;
+    UPROPERTY(VisibleAnywhere)
+	EBirdState CurrentState;
 
 };

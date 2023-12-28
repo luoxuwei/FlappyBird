@@ -32,7 +32,7 @@ APipeActor::APipeActor()
 		SpriteDown->SetRelativeLocation(FVector(0, 0, -200));
 	}
 
-	MoveSpeed = 100;
+	MoveSpeed = 0;
 	PipeInterval = 160;
 
 }
@@ -79,5 +79,10 @@ void APipeActor::ResetPipePosition()
 		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * PipeInterval, 0, RandPipeGroupOffsetZ()));
 	}
 
+}
+
+void APipeActor::SetMoveSpeed(float Speed /*= 100*/)
+{
+	MoveSpeed = Speed;
 }
 

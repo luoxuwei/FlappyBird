@@ -29,6 +29,8 @@ ABirdPawn::ABirdPawn()
 	BirdRenderComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	BirdRenderComponent->OnComponentBeginOverlap.AddDynamic(this, &ABirdPawn::OnComponentBeginOverlap);
 
+	CurrentState = EBirdState::EBS_Idle;
+
 }
 
 // Called when the game starts or when spawned
@@ -59,7 +61,8 @@ void ABirdPawn::OnComponentBeginOverlap(UPrimitiveComponent* OverlapComponent, A
 
 void ABirdPawn::DoFly() {
 	UE_LOG(LogTemp, Log, TEXT("DoPLay"));
-	BirdRenderComponent->SetSimulatePhysics(true);
+	if (CurrentState != EBirdState::EBS_Fly) return;
+	
 	BirdRenderComponent->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
 	BirdRenderComponent->AddImpulse(FVector::UpVector * 500, NAME_None, true);
 }
@@ -71,5 +74,25 @@ void ABirdPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction(TEXT("DoFly"), IE_Pressed, this, &ABirdPawn::DoFly);
 
+}
+
+void ABirdPawn::ChangeState(EBirdState State)
+{
+	if (CurrentState == State) return;
+	switch (State)
+	{
+	case EBirdState::EBS_Idle:
+		break;
+	case EBirdState::EBS_Fly:
+		BirdRenderComponent->SetSimulatePhysics(true);
+		break;
+	case EBirdState::EBS_Drop:
+		break;
+	case EBirdState::EBS_Dead:
+		break;
+	default:
+		break;
+	}
+	CurrentState = State;
 }
 

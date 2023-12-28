@@ -6,6 +6,7 @@
 #include "BgActor.h"
 #include "LandActor.h"
 #include "PipeActor.h"
+#include <Kismet/GameplayStatics.h>
 
 
 AFlappyBirdGameModeBase::AFlappyBirdGameModeBase() {
@@ -20,4 +21,21 @@ void AFlappyBirdGameModeBase::BeginPlay() {
 	LandActor->SetActorLocation(FVector(0, 2, -200));
 	PipeActor = GetWorld()->SpawnActor<APipeActor>();
 	PipeActor->SetActorLocation(FVector(0, 0, 0));
+}
+
+void AFlappyBirdGameModeBase::ChangeGameState(int32 State)
+{
+	if (0 == State) {
+		BeginGame();
+	}
+}
+
+void AFlappyBirdGameModeBase::BeginGame()
+{
+	PipeActor->SetMoveSpeed();
+	APawn* Pawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	ABirdPawn* BirdPawn = Cast<ABirdPawn>(Pawn);
+	if (BirdPawn) {
+		BirdPawn->ChangeState(EBirdState::EBS_Fly);
+	}
 }

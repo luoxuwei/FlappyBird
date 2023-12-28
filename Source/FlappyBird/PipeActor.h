@@ -26,6 +26,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void ResetPipePosition();
+	void SetMoveSpeed(float Speed = 100);
 protected:
 	UPROPERTY()
 	TArray<USceneComponent*> PipeGroup;
