@@ -5,6 +5,8 @@
 #include <Components/SceneComponent.h>
 #include <PaperSprite.h>
 #include <PaperSpriteComponent.h>
+#include <Kismet/GameplayStatics.h>
+#include "BirdGameStateBase.h"
 
 // Sets default values
 APipeActor::APipeActor()
@@ -66,7 +68,11 @@ void APipeActor::UpdateMove(float DeltaTime)
 		}
 
 		if (!PipGroupUsed[i] && PipeGroup[i]->GetRelativeTransform().GetLocation().X < -150) {
-			UE_LOG(LogTemp, Log, TEXT("add core"));
+			AGameStateBase* Gs = UGameplayStatics::GetGameState(this);
+			ABirdGameStateBase* BirdGs = Cast<ABirdGameStateBase>(Gs);
+			if (BirdGs) {
+				BirdGs->AddScore();
+			}
 			PipGroupUsed[i] = true;
 		}
 	}
