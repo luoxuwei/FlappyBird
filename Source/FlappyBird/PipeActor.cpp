@@ -21,6 +21,7 @@ APipeActor::APipeActor()
 		USceneComponent *c = CreateDefaultSubobject<USceneComponent>(*FString::Printf(TEXT("GroupComp%d"), i));
 		c->SetupAttachment(RootComponent);
 		PipeGroup.Add(c);
+		PipGroupUsed.Add(false);
 		UPaperSpriteComponent* SpriteUp = CreateDefaultSubobject<UPaperSpriteComponent>(*FString::Printf(TEXT("Group%dPipeUp"), i));
 		UPaperSpriteComponent* SpriteDown = CreateDefaultSubobject<UPaperSpriteComponent>(*FString::Printf(TEXT("Group%dPipeDown"), i));
 		SpriteUp->SetupAttachment(c);
@@ -30,6 +31,7 @@ APipeActor::APipeActor()
 
 		SpriteUp->SetRelativeLocation(FVector(0, 0, 200));
 		SpriteDown->SetRelativeLocation(FVector(0, 0, -200));
+
 	}
 
 	MoveSpeed = 0;
@@ -60,6 +62,12 @@ void APipeActor::UpdateMove(float DeltaTime)
 
 			float x = (PipeGroup[FollowSize]->GetRelativeTransform().GetLocation() + FVector::ForwardVector * PipeInterval).X;
 			PipeGroup[i]->SetRelativeLocation(FVector(x, 0, RandPipeGroupOffsetZ()));
+			PipGroupUsed[i] = false;
+		}
+
+		if (!PipGroupUsed[i] && PipeGroup[i]->GetRelativeTransform().GetLocation().X < -150) {
+			UE_LOG(LogTemp, Log, TEXT("add core"));
+			PipGroupUsed[i] = true;
 		}
 	}
 }

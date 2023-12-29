@@ -30,7 +30,7 @@ public:
 protected:
 	UPROPERTY()
 	TArray<USceneComponent*> PipeGroup;
-
+	TArray<bool> PipGroupUsed;
 	int32 MoveSpeed;
 	float PipeInterval;
 };
