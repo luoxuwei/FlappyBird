@@ -113,6 +113,8 @@ void ABirdPawn::ChangeState(EBirdState State)
 	switch (State)
 	{
 	case EBirdState::EBS_Idle:
+		BirdRenderComponent->SetRelativeLocation(FVector::ZeroVector);
+		BirdRenderComponent->SetRelativeRotation(FRotator::ZeroRotator);
 		break;
 	case EBirdState::EBS_Fly:
 		BirdRenderComponent->SetSimulatePhysics(true);

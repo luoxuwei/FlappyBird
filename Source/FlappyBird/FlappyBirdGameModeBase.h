@@ -39,6 +39,7 @@ public:
 	void BeginGame();
 	void ChangeBirdGameState(EBirdGameState State);
 	void StopSceneObject();
+	void ResetGame();
 
 private:
 	UPROPERTY()

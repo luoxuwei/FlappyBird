@@ -30,6 +30,10 @@ void AFlappyBirdGameModeBase::ChangeGameState(int32 State)
 	if (0 == State) {
 		ChangeBirdGameState(EBirdGameState::EBGS_Gaming); 
 	}
+	else if (1 == State) {
+		ResetGame();
+		ChangeBirdGameState(EBirdGameState::EBGS_Menu);
+	}
 }
 
 void AFlappyBirdGameModeBase::BeginGame()
@@ -67,4 +71,13 @@ void AFlappyBirdGameModeBase::StopSceneObject()
 {
 	PipeActor->SetMoveSpeed(0);
 	LandActor->SetMoveSpeed(0);
+}
+
+void AFlappyBirdGameModeBase::ResetGame()
+{
+	BgActor->RandomBgSprite();
+	PipeActor->ResetPipePosition();
+	if (ABirdPawn* Bp = Cast<ABirdPawn>(UGameplayStatics::GetPlayerPawn(this, 0))) {
+		Bp->ChangeState(EBirdState::EBS_Idle);
+	}
 }
