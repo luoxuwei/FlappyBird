@@ -25,6 +25,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void UpdateMove(float DeltaTime);
+	void SetMoveSpeed(float Speed);
 private:
 	UPROPERTY()
 	UPaperSpriteComponent* LandRenderComp0;
@@ -32,5 +33,5 @@ private:
 	UPaperSpriteComponent* LandRenderComp1;
 	int32 MoveSpeed;
 	UPROPERTY()
-	UStaticMeshComponent* LandMeshRender;
+	UStaticMeshComponent* LandMeshRender; 
 };

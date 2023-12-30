@@ -65,6 +65,13 @@ void ALandActor::UpdateMove(float DeltaTime) {
 }
 
 
+void ALandActor::SetMoveSpeed(float Speed)
+{
+	MoveSpeed = Speed;
+	LandMeshRender->SetScalarParameterValueOnMaterials(TEXT("Speed"), MoveSpeed);
+
+}
+
 // Called every frame
 void ALandActor::Tick(float DeltaTime)
 {

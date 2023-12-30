@@ -9,7 +9,17 @@
 class ABgActor;
 class ALandActor;
 class APipeActor;
-/**
+
+UENUM(BlueprintType)
+enum class EBirdGameState : uint8
+{
+	EBGS_Menu,
+	EBGS_Gaming,
+	EBGS_BirdDrop,
+	EBGS_GameOver,
+};
+
+/**	
  * 
  */
 UCLASS()
@@ -27,6 +37,8 @@ public:
 	UFUNCTION(Exec)
 	void ChangeGameState(int32 State);
 	void BeginGame();
+	void ChangeBirdGameState(EBirdGameState State);
+	void StopSceneObject();
 
 private:
 	UPROPERTY()
@@ -35,4 +47,5 @@ private:
 	ALandActor* LandActor;
 	UPROPERTY()
 	APipeActor* PipeActor;
+	EBirdGameState CurrentState;
 };

@@ -6,6 +6,9 @@
 #include <Camera/CameraComponent.h>
 #include <UObject/ConstructorHelpers.h>
 #include <PaperFlipbook.h>
+#include "PipeActor.h"
+#include <Kismet/GameplayStatics.h>
+#include "FlappyBirdGameModeBase.h"
 
 // Sets default values
 ABirdPawn::ABirdPawn()
@@ -57,6 +60,24 @@ void ABirdPawn::Tick(float DeltaTime)
 void ABirdPawn::OnComponentBeginOverlap(UPrimitiveComponent* OverlapComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("OnComponentBeginOverlap"));
+	if (CurrentState == EBirdState::EBS_Dead || CurrentState == EBirdState::EBS_Idle) {
+		return;
+	}
+	if (Cast<APipeActor>(OtherActor)) {
+		ChangeState(EBirdState::EBS_Drop);
+		if (AFlappyBirdGameModeBase *Gm = Cast<AFlappyBirdGameModeBase>(UGameplayStatics::GetGameMode(this)))
+		{
+			Gm->ChangeBirdGameState(EBirdGameState::EBGS_BirdDrop);
+		}
+	}
+	else {
+		ChangeState(EBirdState::EBS_Dead);
+		if (AFlappyBirdGameModeBase* Gm = Cast<AFlappyBirdGameModeBase>(UGameplayStatics::GetGameMode(this)))
+		{
+			Gm->ChangeBirdGameState(EBirdGameState::EBGS_GameOver);
+		}
+
+	}
 }
 
 void ABirdPawn::DoFly() {
@@ -69,7 +90,7 @@ void ABirdPawn::DoFly() {
 
 void ABirdPawn::UpdateFace(float DeltaTime)
 {
-	if (CurrentState == EBirdState::EBS_Fly)
+	if (CurrentState == EBirdState::EBS_Fly || CurrentState == EBirdState::EBS_Drop)
 	{
 		FVector Velocity = BirdRenderComponent->GetPhysicsLinearVelocity();
 		float PitchValue = Velocity.Z * 15 * DeltaTime;
@@ -99,6 +120,7 @@ void ABirdPawn::ChangeState(EBirdState State)
 	case EBirdState::EBS_Drop:
 		break;
 	case EBirdState::EBS_Dead:
+		BirdRenderComponent->SetSimulatePhysics(false);
 		break;
 	default:
 		break;

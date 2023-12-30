@@ -28,7 +28,7 @@ void AFlappyBirdGameModeBase::BeginPlay() {
 void AFlappyBirdGameModeBase::ChangeGameState(int32 State)
 {
 	if (0 == State) {
-		BeginGame();
+		ChangeBirdGameState(EBirdGameState::EBGS_Gaming); 
 	}
 }
 
@@ -39,5 +39,32 @@ void AFlappyBirdGameModeBase::BeginGame()
 	ABirdPawn* BirdPawn = Cast<ABirdPawn>(Pawn);
 	if (BirdPawn) {
 		BirdPawn->ChangeState(EBirdState::EBS_Fly);
+	}   
+}
+
+void AFlappyBirdGameModeBase::ChangeBirdGameState(EBirdGameState State)
+{
+	switch (State)
+	{
+	case EBirdGameState::EBGS_Menu:
+		break;
+	case EBirdGameState::EBGS_Gaming:
+		BeginGame();
+		break;
+	case EBirdGameState::EBGS_BirdDrop:
+		StopSceneObject();
+		break;
+	case EBirdGameState::EBGS_GameOver:
+		StopSceneObject();
+		break;
+	default:
+		break;
 	}
+	CurrentState = State;
+}
+
+void AFlappyBirdGameModeBase::StopSceneObject()
+{
+	PipeActor->SetMoveSpeed(0);
+	LandActor->SetMoveSpeed(0);
 }
