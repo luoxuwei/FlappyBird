@@ -9,6 +9,7 @@
 #include "PipeActor.h"
 #include <Kismet/GameplayStatics.h>
 #include "FlappyBirdGameModeBase.h"
+#include <Curves/CurveFloat.h>
 
 // Sets default values
 ABirdPawn::ABirdPawn()
@@ -48,6 +49,7 @@ void ABirdPawn::BeginPlay()
 		body->bLockZRotation = true;
 		body->CreateDOFLock();
 	}
+	FlyCurve = LoadObject<UCurveFloat>(nullptr, TEXT("CurveFloat'/Game/FlappyBird/Data/Curves/CV_BirdFly.CV_BirdFly'"));
 }
 
 // Called every frame
@@ -55,6 +57,7 @@ void ABirdPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	UpdateFace(DeltaTime);
+	UpdateFly(DeltaTime);
 }
 
 void ABirdPawn::OnComponentBeginOverlap(UPrimitiveComponent* OverlapComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -96,6 +99,19 @@ void ABirdPawn::UpdateFace(float DeltaTime)
 		float PitchValue = Velocity.Z * 15 * DeltaTime;
 		BirdRenderComponent->SetRelativeRotation(FRotator(PitchValue, 0, 0));
 	}
+}
+
+void ABirdPawn::UpdateFly(float DeltaTime)
+{
+	float MinTime, MaxTime;
+	FlyCurve->GetTimeRange(MinTime, MaxTime);
+
+	if ((CurveTick += DeltaTime) > MaxTime) {
+		CurveTick = MinTime;
+	}
+
+	float value = FlyCurve->GetFloatValue(CurveTick);
+	BirdRenderComponent->SetRelativeLocation(FVector(0, 0, value * 50));
 }
 
 // Called to bind functionality to input

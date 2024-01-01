@@ -7,6 +7,7 @@
 #include "BirdPawn.generated.h"
 class UPaperFlipbookComponent;
 class UCameraComponent;
+class UCurveFloat;
 
 UENUM(BlueprintType)
 enum class EBirdState : uint8
@@ -31,6 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 	void DoFly();
 	void UpdateFace(float DeltaTime);
+	void UpdateFly(float DeltaTime);
 
 public:	
 	// Called every frame
@@ -50,5 +52,7 @@ protected:
 	UCameraComponent* PlayerCamera;
     UPROPERTY(VisibleAnywhere)
 	EBirdState CurrentState;
-
+	UPROPERTY()
+	UCurveFloat* FlyCurve;
+	float CurveTick;
 };
