@@ -8,11 +8,13 @@
 #include "PipeActor.h"
 #include <Kismet/GameplayStatics.h>
 #include "BirdGameStateBase.h"
+#include "BirdHUD.h"
 
 
 AFlappyBirdGameModeBase::AFlappyBirdGameModeBase() {
 	DefaultPawnClass = ABirdPawn::StaticClass();
 	GameStateClass = ABirdGameStateBase::StaticClass();
+	HUDClass = ABirdHUD::StaticClass();
 }
 
 void AFlappyBirdGameModeBase::BeginPlay() {

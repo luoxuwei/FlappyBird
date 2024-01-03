@@ -103,6 +103,7 @@ void ABirdPawn::UpdateFace(float DeltaTime)
 
 void ABirdPawn::UpdateFly(float DeltaTime)
 {
+	if (CurrentState != EBirdState::EBS_Idle) return;
 	float MinTime, MaxTime;
 	FlyCurve->GetTimeRange(MinTime, MaxTime);
 

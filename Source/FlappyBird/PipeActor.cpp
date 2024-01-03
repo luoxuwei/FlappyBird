@@ -90,7 +90,7 @@ void APipeActor::ResetPipePosition()
 {
 	for (size_t i = 0; i < 3; i++)
 	{
-		PipeGroup[i]->SetRelativeLocation(FVector(150 + i * PipeInterval, 0, RandPipeGroupOffsetZ()));
+		PipeGroup[i]->SetRelativeLocation(FVector(200 + i * PipeInterval, 0, RandPipeGroupOffsetZ()));
 	}
 
 }
