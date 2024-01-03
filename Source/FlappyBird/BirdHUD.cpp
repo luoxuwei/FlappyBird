@@ -6,6 +6,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "BirdGameStateBase.h"
 #include <Engine/Canvas.h>
+#include <UObject/NoExportTypes.h>
 
 void ABirdHUD::BeginPlay()
 {
@@ -15,13 +16,16 @@ void ABirdHUD::BeginPlay()
 	{
 		NumberTextureArray.Add(LoadObject<UTexture>(nullptr, *FString::Printf(TEXT("Texture2D'/Game/FlappyBird/Textures/numbers/font_0%d.font_0%d'"), i, i)));
 	}
+	FadeAlpha = 0.0f;
+	FadeSpeed = 10.0f;
+	bFade = false;
 }
 
 void ABirdHUD::DrawHUD()
 {
 	Super::DrawHUD();
 	DrawGameScoreNunber();
-
+	DrawScreenFade();
 }
 
 void ABirdHUD::DrawGameScoreNunber()
@@ -51,4 +55,21 @@ void ABirdHUD::DrawGameScoreNunber()
 
 
 	}
+}
+
+void ABirdHUD::DrawScreenFade()
+{
+	if (!bFade) return;
+
+	FadeAlpha += FadeSpeed * GetWorld()->GetDeltaSeconds();
+	DrawRect(FLinearColor(1, 1, 1, FadeAlpha), 0, 0, Canvas->ClipX, Canvas->ClipY);
+	FadeSpeed = FadeSpeed * (FadeAlpha > 1 || FadeAlpha < 0 ? -1 : 1);
+	bFade = FadeAlpha > 0;
+
+}
+
+void ABirdHUD::StartFade()
+{
+	bFade = true;
+	FadeAlpha = 0;
 }

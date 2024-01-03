@@ -10,6 +10,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "FlappyBirdGameModeBase.h"
 #include <Curves/CurveFloat.h>
+#include "BirdHUD.h"
 
 // Sets default values
 ABirdPawn::ABirdPawn()
@@ -137,9 +138,16 @@ void ABirdPawn::ChangeState(EBirdState State)
 		BirdRenderComponent->SetSimulatePhysics(true);
 		break;
 	case EBirdState::EBS_Drop:
-		break;
 	case EBirdState::EBS_Dead:
-		BirdRenderComponent->SetSimulatePhysics(false);
+		if (ABirdHUD* HUD = Cast<ABirdHUD>(Cast<APlayerController>(GetController())->GetHUD())) {
+			if (CurrentState != EBirdState::EBS_Drop) {
+				HUD->StartFade();
+			}
+		}
+		if (State == EBirdState::EBS_Dead) {
+			BirdRenderComponent->SetSimulatePhysics(false);
+		}
+		
 		break;
 	default:
 		break;

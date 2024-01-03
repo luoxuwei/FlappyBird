@@ -19,9 +19,16 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void DrawHUD() override;
 	void DrawGameScoreNunber();
+	void DrawScreenFade();
+
+public:
+	void StartFade();
 	
 private:
 	UTexture* NumberTexture;
 	UPROPERTY()
 	TArray<UTexture*> NumberTextureArray;
+	float FadeAlpha;
+	float FadeSpeed;
+	bool bFade;
 };
